@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8">
+  <script src="https://d3js.org/d3.v4.min.js"></script>
+  <style>
+    body { margin:0;position:fixed;top:0;right:0;bottom:0;left:0; }
+
+  </style>
+</head>
+
+<body>
+		<svg id="subtraction" width="200" height="200">
+		  <defs>
+		    <mask id="hole">
+		      <rect width="100%" height="100%" fill="white"/>
+		      <!-- <circle r="50" cx="100" cy="100" fill="black"/> -->
+		      <rect width="70" height="70" x="20" fill="black"/>
+		    </mask>
+		  </defs>
+
+		  <!-- <circle id="donut" r="100" cx="100" cy="100" mask="url(#hole)" /> -->
+		    
+		</svg>
+
+		<svg width="400" height="400">
+		  <defs>
+		    <clipPath id="shape">
+		      <rect x="40" y="50" width="40" height="70" />
+		      <circle cx="50" cy="50" r="50" />
+		    </clipPath>
+		    
+		    <filter id="shadow">
+		      <feGaussianBlur in="SourceAlpha" stdDeviation="3"/>
+		      <feOffset dx="3" dy="3"/>
+		      <feMerge>
+		        <feMergeNode/>
+		        <feMergeNode in="SourceGraphic"/>
+		      </feMerge>
+		    </filter>
+		  </defs>
+		  <g id="merge" filter="url(#shadow)">
+		    <!-- <rect width="100%" height="100%" fill="red"
+		          clip-path="url(#shape)"/> -->
+		  </g>
+		</svg>
+  <script>
+
+    d3.select("svg#subtraction").append("circle")
+    	.attr("r", 100)
+    	.attr("cx", 100)
+    	.attr("cy", 100)
+    	.attr("mask", "url(#hole)")
+    	.on("mouseover", function(d) {
+	      // console.log('hover');
+	      d3.select(this)
+	      	.attr("fill","green");
+	    })
+	    .on("mouseout", function(d) {
+	      // console.log('mouseout');
+	      d3.select(this)
+	      	.attr("fill","SteelBlue");
+	    });
+
+    d3.select("g#merge").append("rect")
+    	.attr("width", "100%")
+    	.attr("height", "100%")
+    	.attr("fill", "red")
+    	.attr("clip-path", "url(#shape)")
+    	.on("mouseover", function(d) {
+	      // console.log('hover');
+	      d3.select(this)
+	      	.attr("fill","green");
+	    })
+	    .on("mouseout", function(d) {
+	      // console.log('mouseout');
+	      d3.select(this)
+	      	.attr("fill","SteelBlue");
+	    });
+
+
+    
+var holder = d3.select("body") // select the 'body' element
+      .append("svg")           // append an SVG element to the body
+      .attr("width", 449)      // make the SVG element 449 pixels wide
+      .attr("height", 249);    // make the SVG element 249 pixels high
+
+// draw a circle
+holder.append("clipPath")       // define a clip path
+	.attr("id", "ellipse-clip") // give the clipPath an ID
+  .append("ellipse")            // shape it as an ellipse
+	.attr("cx", 175)            // position the x-centre
+	.attr("cy", 150)            // position the y-centre
+	.attr("rx", 70)            // set the x radius
+	.attr("ry", 70); 
+    
+holder.append("ellipse")
+	.attr("cx",175)
+	.attr("cy",350)
+	.attr("clip-path","url(#ellipse-clip)")
+	.attr("fill","SteelBlue")
+	.attr("rx", 200)
+	.attr("ry", 200)
+	.on("mouseover", function(d) {
+      // console.log('hover');
+      d3.select(this)
+      	.attr("fill","green");
+    })
+    .on("mouseout", function(d) {
+      // console.log('mouseout');
+      d3.select(this)
+      	.attr("fill","SteelBlue");
+    })
+    
+  </script>
+</body>
